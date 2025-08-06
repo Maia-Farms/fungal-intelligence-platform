@@ -4,11 +4,11 @@ import Logo from "./../assets/Wordmark - Black.svg";
 
 
 const navLinks = [
-  { name: "Global", path: "/global" },
-  { name: "Site", path: "/site" },
-  { name: "Reactor", path: "/reactor" },
-  { name: "Batch Analysis", path: "/batch-analysis" },
-  { name: "Strains Explore", path: "/strains" },
+  { name: "GLOBAL", path: "/global" },
+  { name: "SITE", path: "/site" },
+  { name: "REACTOR", path: "/reactor" },
+  { name: "BATCH ANALYSIS", path: "/batch-analysis" },
+  { name: "STRAINS EXPLORE", path: "/strains" },
 ];
 
 // Utility: returns true if current path matches link path
@@ -34,7 +34,7 @@ const Header: React.FC = () => {
         {/* LOGO */}
         <Link to="/" className="flex items-center space-x-2">
           <img src={Logo} className="h-8 w-auto" alt="Fungal Intelligence Logo" />
-          <span className="font-halvar-medium text-lg tracking-wide">Fungal Intelligence</span>
+          <span className="font-halvar-medium text-lg tracking-wide">FUNGAL INTELLIGENCE</span>
         </Link>
 
         {/* NAVIGATION */}
