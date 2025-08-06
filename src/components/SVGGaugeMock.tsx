@@ -58,13 +58,13 @@ const SVGGauge: React.FC<SVGGaugeProps> = ({
         {/* Value text */}
         <text
           x="50%"
-          y="54%"
+          y="48%"
           textAnchor="middle"
           alignmentBaseline="middle"
           className="font-halvar font-bold"
-          style={{ fontSize: size * 0.3, fill: "#173D3C" }}
+          style={{ fontSize: size * 0.25, fill: "#173D3C" }}
         >
-          {Math.round(value)}
+          {value}
         </text>
         {/* Units */}
         {units &&

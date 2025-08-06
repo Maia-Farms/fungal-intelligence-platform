@@ -1,14 +1,12 @@
 import React from "react";
 
-type LinePlotMockProps = {
+interface LinePlotMockProps {
   width?: number;
   height?: number;
+  phData: number[];
+  doData: number[];
   className?: string;
-};
-
-const pHData = [6.8, 7.0, 7.1, 7.2, 7.15, 7.0, 6.95, 7.05, 7.00, 6.97, 7.02, 7.01];
-const doData = [95, 94, 92, 90, 88, 85, 87, 89, 91, 93, 90, 92];
-const timeLabels = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110];
+}
 
 const chartPadding = 32;
 const chartWidth = 400;
@@ -19,10 +17,10 @@ function scale(value: number, [min, max]: [number, number], height: number) {
   return chartPadding + ((max - value) / (max - min)) * (height - 2 * chartPadding);
 }
 
-export default function LinePlotMock({ width = chartWidth, height = chartHeight, className = "" }: LinePlotMockProps) {
+export default function LinePlotMock({ width = chartWidth, height = chartHeight, className = "", phData, doData }: LinePlotMockProps) {
   // Build points for each series
-  const xStep = (width - 2 * chartPadding) / (pHData.length - 1);
-  const pHPoints = pHData.map((d, i) =>
+  const xStep = (width - 2 * chartPadding) / (phData.length - 1);
+  const pHPoints = phData.map((d, i) =>
     `${chartPadding + i * xStep},${scale(d, [6.5, 7.3], height)}`
   ).join(" ");
   const doPoints = doData.map((d, i) =>
@@ -52,7 +50,7 @@ export default function LinePlotMock({ width = chartWidth, height = chartHeight,
         {doData.map((d, i) => (
           <circle key={i} cx={chartPadding + i * xStep} cy={scale(d, [80, 100], height)} r={2.5} fill="#173D3C" />
         ))}
-        {pHData.map((d, i) => (
+        {phData.map((d, i) => (
           <circle key={i} cx={chartPadding + i * xStep} cy={scale(d, [6.5, 7.3], height)} r={2.5} fill="#26bfa6" />
         ))}
       </svg>
