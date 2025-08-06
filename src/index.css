@@ -1,1 +1,41 @@
 @import "tailwindcss";
+
+/* Halvar Mittelschrift Medium */
+@font-face {
+  font-family: "Halvar Mittelschrift";
+  src: url("/fonts/Halvar Mittelschrift-Medium-Web.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Halvar Mittelschrift Regular */
+@font-face {
+  font-family: "Halvar Mittelschrift";
+  src: url("/fonts/Halvar HalvarMittelschrift-Regular-Desktop.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Pica 10 Pitch Roman */
+@font-face {
+  font-family: "Pica 10 Pitch";
+  src: url("/fonts/Pica10PitchBT-Roman.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-halvar-medium {
+  font-family: "Halvar Mittelschrift", sans-serif;
+  font-weight: 500;
+}
+.font-halvar-regular {
+  font-family: "Halvar Mittelschrift", sans-serif;
+  font-weight: 400;
+}
+.font-pica {
+  font-family: "Pica 10 Pitch", monospace;
+  font-weight: 400;
+}

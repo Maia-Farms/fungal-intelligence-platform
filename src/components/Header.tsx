@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "./../assets/wordmark-black.svg";
+import Logo from "./../assets/Wordmark - Black.svg";
 
 
 const navLinks = [
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
         w-full 
         bg-white 
         border-b border-black 
-        shadow-sm
+        shadow-md
       "
       role="banner"
     >
@@ -34,7 +34,7 @@ const Header: React.FC = () => {
         {/* LOGO */}
         <Link to="/" className="flex items-center space-x-2">
           <img src={Logo} className="h-8 w-auto" alt="Fungal Intelligence Logo" />
-          <span className="font-semibold text-lg tracking-wide">Fungal Intelligence</span>
+          <span className="font-halvar-medium text-lg tracking-wide">Fungal Intelligence</span>
         </Link>
 
         {/* NAVIGATION */}
@@ -46,7 +46,7 @@ const Header: React.FC = () => {
                 key={link.path}
                 to={link.path}
                 className={`
-                  px-4 py-2 rounded-md text-sm font-medium transition-all
+                  px-4 py-2 rounded-md text-sm font-halvar-regular transition-all
                   border border-transparent
                   ${
                     active
@@ -56,6 +56,7 @@ const Header: React.FC = () => {
                   focus:outline-none focus:ring-2 focus:ring-[#173D3C]
                 `}
                 aria-current={active ? "page" : undefined}
+                style={{ textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}
               >
                 {link.name}
               </Link>
