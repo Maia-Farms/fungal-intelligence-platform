@@ -1,5 +1,4 @@
 import React from "react";
-import clsx from "clsx"; // (Optional, tailwind helper, or use string templates)
 
 const STAGES = [
   "Recipe Created",
@@ -11,49 +10,49 @@ const STAGES = [
 ];
 
 interface StepProgressBarProps {
-  currentStage: number; // 0-based: 0="Recipe Created", 5="Harvested"
-  stages?: string[];    // Optional to override
+  currentStage: number; // 0-based index
+  stages?: string[];
+  className?: string;
 }
 
 export const StepProgressBar: React.FC<StepProgressBarProps> = ({
   currentStage,
   stages = STAGES,
+  className = "",
 }) => (
-  <div className="w-full flex flex-col items-center pb-4">
-    {/* Step Dots and Connecting Bars */}
-    <div className="flex items-center w-full">
-      {stages.map((stage, idx) => (
-        <React.Fragment key={stage}>
+  <div className={`w-full py-2 flex flex-col items-center ${className}`}>
+    {/* Dots/Bars row: flex, will fill card width */}
+    <div className="flex items-center w-full px-2 md:px-4">
+      {stages.map((_, idx) => (
+        <React.Fragment key={idx}>
           {/* Dot */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center z-10">
             <div
-              className={clsx(
-                "rounded-full w-4 h-4 border-2",
-                idx <= currentStage
+              className={`rounded-full w-4 h-4 border-2 transition 
+                ${idx <= currentStage
                   ? "bg-[#26bfa6] border-[#26bfa6]"
-                  : "bg-white border-[#D9D9D9]"
-              )}
+                  : "bg-white border-[#D9D9D9]"}
+              `}
             />
           </div>
-          {/* Connecting bar except after last dot */}
+          {/* Bar, unless last dot */}
           {idx < stages.length - 1 && (
             <div
-              className={clsx(
-                "h-1 flex-1 mx-1 md:mx-2",
-                idx < currentStage
-                  ? "bg-[#26bfa6]"
-                  : "bg-[#D9D9D9]"
-              )}
-              style={{ minWidth: 20 }}
+              className={`flex-1 h-1 mx-1 md:mx-2 transition 
+                ${idx < currentStage ? "bg-[#26bfa6]" : "bg-[#D9D9D9]"}`}
+              style={{ minWidth: 10 }}
             />
           )}
         </React.Fragment>
       ))}
     </div>
-    {/* Step Labels */}
-    {/* <div className="flex w-full justify-between mt-1">
+    {/* Labels under dots: will also stretch responsively */}
+    {/* <div className="flex w-full justify-between mt-1 px-1">
       {stages.map((stage, idx) => (
-        <div key={stage} className="w-1/6 text-xs text-center font-halvar" style={{minWidth: 60}}>
+        <div
+          key={stage}
+          className="text-[10px] sm:text-xs text-center font-halvar w-1/6 whitespace-nowrap px-[1px] truncate"
+        >
           {stage}
         </div>
       ))}

@@ -1,25 +1,30 @@
 import React from "react";
 
 interface LinePlotMockProps {
-  width?: number;
-  height?: number;
+  width?: number; // Logical width for viewBox math
+  height?: number; // Logical height for viewBox math
   phData: number[];
   doData: number[];
   className?: string;
 }
 
-const chartPadding = 32;
-const chartWidth = 400;
-const chartHeight = 160;
+const chartPadding = 20; // Less for a closer-to-edge look
+const chartWidth = 340;  // Logical width for viewBox, not rendered px
+const chartHeight = 100; // Logical height
 
-// Utility to scale data to chart Y-coord
 function scale(value: number, [min, max]: [number, number], height: number) {
   return chartPadding + ((max - value) / (max - min)) * (height - 2 * chartPadding);
 }
 
-export default function LinePlotMock({ width = chartWidth, height = chartHeight, className = "", phData, doData }: LinePlotMockProps) {
-  // Build points for each series
+export default function LinePlotMock({
+  width = chartWidth,
+  height = chartHeight,
+  className = "",
+  phData,
+  doData
+}: LinePlotMockProps) {
   const xStep = (width - 2 * chartPadding) / (phData.length - 1);
+
   const pHPoints = phData.map((d, i) =>
     `${chartPadding + i * xStep},${scale(d, [6.5, 7.3], height)}`
   ).join(" ");
@@ -28,8 +33,15 @@ export default function LinePlotMock({ width = chartWidth, height = chartHeight,
   ).join(" ");
 
   return (
-    <div>
-      <svg width={width} height={height} className="block mx-auto">
+    <div className={className} style={{ width: "100%" }}>
+      <svg
+        width="100%"
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
+        preserveAspectRatio="none"
+        className="block"
+        style={{ display: "block" }}
+      >
         {/* DO Line */}
         <polyline
           points={doPoints}
@@ -46,12 +58,19 @@ export default function LinePlotMock({ width = chartWidth, height = chartHeight,
           strokeWidth={2.5}
           opacity={0.85}
         />
-        {/* Optionally add points */}
         {doData.map((d, i) => (
-          <circle key={i} cx={chartPadding + i * xStep} cy={scale(d, [80, 100], height)} r={2.5} fill="#173D3C" />
+          <circle key={`do-${i}`}
+            cx={chartPadding + i * xStep}
+            cy={scale(d, [80, 100], height)}
+            r={2.5} fill="#173D3C"
+          />
         ))}
         {phData.map((d, i) => (
-          <circle key={i} cx={chartPadding + i * xStep} cy={scale(d, [6.5, 7.3], height)} r={2.5} fill="#26bfa6" />
+          <circle key={`ph-${i}`}
+            cx={chartPadding + i * xStep}
+            cy={scale(d, [6.5, 7.3], height)}
+            r={2.5} fill="#26bfa6"
+          />
         ))}
       </svg>
     </div>
