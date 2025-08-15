@@ -32,7 +32,7 @@ function initialMetrics() {
 }
 
 export default function Site() {
-  const { id } = useParams<{ id: string }>();
+  const { siteId } = useParams<{ siteId: string }>();
   const [metrics, setMetrics] = useState(() => initialMetrics());
 ;
 
@@ -64,7 +64,7 @@ export default function Site() {
   return (
     <div className="py-10 px-6 max-w-7xl mx-auto">
       <h1 className="font-halvar text-2xl font-semibold mb-8 text-center">
-        SITE: {id?.toUpperCase() || "REACTORS"}
+        SITE: {siteId?.toUpperCase() || "REACTORS"}
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {reactorIds.map((reactor, i) => (
