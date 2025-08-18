@@ -22,12 +22,12 @@ const reactorIds = [
 ];
 
 const displayReactors: DisplayReactor[] = [
-  { id: "CAN-123-12", status: "active",  startedAt: new Date(Date.now() - 8 * 3600 * 1000) },
-  { id: "CAN-123-15", status: "active",  startedAt: new Date(Date.now() - 6.5 * 3600 * 1000) },
-  { id: "CAN-123-19", status: "active",  startedAt: new Date(Date.now() - 10 * 3600 * 1000) },
-  { id: "CAN-123-20", status: "active",  startedAt: new Date(Date.now() - 12 * 3600 * 1000) },
+  { id: "CAN-123-12", status: "active", startedAt: new Date(Date.now() - 8 * 3600 * 1000) },
+  { id: "CAN-123-15", status: "active", startedAt: new Date(Date.now() - 6.5 * 3600 * 1000) },
+  { id: "CAN-123-19", status: "active", startedAt: new Date(Date.now() - 10 * 3600 * 1000) },
+  { id: "CAN-123-20", status: "active", startedAt: new Date(Date.now() - 12 * 3600 * 1000) },
   { id: "CAN-123-21", status: "warning", startedAt: new Date(Date.now() - 4.25 * 3600 * 1000) },
-  { id: "CAN-123-24", status: "error",   startedAt: new Date(Date.now() - 2.1 * 3600 * 1000) },
+  { id: "CAN-123-24", status: "error", startedAt: new Date(Date.now() - 2.1 * 3600 * 1000) },
   // Inactives
   ...Array.from({ length: 12 }, (_, i) => ({
     id: `CAN-124-${i + 1}`,
@@ -101,18 +101,18 @@ export default function Site() {
               value={`${siteHealthPercent}%`}
               colorClass={
                 siteHealthPercent >= 90 ? "text-[#26bfa6]" :
-                siteHealthPercent >= 75 ? "text-yellow-500" :
-                "text-red-500"
+                  siteHealthPercent >= 75 ? "text-yellow-500" :
+                    "text-red-500"
               }
               subtext={
                 siteHealthPercent >= 90 ? "Healthy" :
-                siteHealthPercent >= 75 ? "Warning" :
-                "Critical"
+                  siteHealthPercent >= 75 ? "Warning" :
+                    "Critical"
               }
               icon={
                 siteHealthPercent >= 90 ? <span role="img" aria-label="ok">✅</span> :
-                siteHealthPercent >= 75 ? <span role="img" aria-label="warn">⚠️</span> :
-                <span role="img" aria-label="err">❌</span>
+                  siteHealthPercent >= 75 ? <span role="img" aria-label="warn">⚠️</span> :
+                    <span role="img" aria-label="err">❌</span>
               }
             />
           </div>
@@ -138,9 +138,7 @@ export default function Site() {
         {/* SIDEBAR (35% on large screens) */}
         <div className="w-full h-full lg:w-[25%] flex flex-col gap-6">
           {/* Mock Camera Feed */}
-          <div className="bg-black rounded-lg shadow-md border border-gray-400 aspect-video flex items-center justify-center">
-            <span className="text-white opacity-60 font-halvar text-lg">Mock Camera Feed</span>
-          </div>
+          
           {/* Scrollable Reactors List */}
           <ReactorStatusList reactors={displayReactors} />
         </div>
