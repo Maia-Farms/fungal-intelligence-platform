@@ -109,7 +109,7 @@ export const StatCard: React.FC<StatCardProps> = ({
                                 <SVGGauge value={co2} min={200} max={600} units="CO₂ ppm" title="" />
                             </div>
                         </div>
-                        <LinePlotMock width={300} height={100} className="mt-4" phData={phData} doData={doData} />
+                        <LinePlotMock width={400} height={100} className="mt-1" phData={phData} doData={doData} />
                     </div>
                     <div className="mb-2">
                         <h3 className="font-halvar-medium text-2xl font-semibold text-[#262626] mb-1 text-center">

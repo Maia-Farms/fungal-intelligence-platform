@@ -47,9 +47,9 @@ function initialMetrics() {
   return reactorIds.map(() => ({
     temp: initialTemp(),
     rpm: 300,
-    co2: initialCO2(), // CO2 added here
-    phData: Array.from({ length: 12 }, randomPh),
-    doData: Array.from({ length: 12 }, randomDO),
+    co2: initialCO2(),
+    phData: Array.from({ length: 120 }, randomPh),
+    doData: Array.from({ length: 120 }, randomDO),
   }));
 }
 
@@ -58,26 +58,25 @@ export default function Site() {
   const [metrics, setMetrics] = useState(() => initialMetrics());
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setMetrics(prevMetrics =>
-        prevMetrics.map((m) => {
-          const tempDelta = Math.random() * 0.08 - 0.04;
-          const newTemp = clamp(m.temp + tempDelta, 21.0, 26.0);
-          // Simulate small CO2 drift (±1 ppm each time)
-          const co2Delta = Math.random() * 2 - 1;
-          const newCO2 = clamp(m.co2 + co2Delta, 300, 500);
-          return {
-            temp: newTemp,
-            rpm: m.rpm,
-            co2: newCO2,
-            phData: [...m.phData.slice(1), randomPh()],
-            doData: [...m.doData.slice(1), randomDO()],
-          };
-        })
-      );
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  const interval = setInterval(() => {
+    setMetrics(prevMetrics =>
+      prevMetrics.map((m) => {
+        const tempDelta = Math.random() * 0.08 - 0.04;
+        const newTemp = clamp(m.temp + tempDelta, 21.0, 26.0);
+        const co2Delta = Math.random() * 2 - 1;
+        const newCO2 = clamp(m.co2 + co2Delta, 300, 500);
+        return {
+          temp: newTemp,
+          rpm: m.rpm,
+          co2: newCO2,
+          phData: [...m.phData.slice(1), randomPh()], // shift left, add new to end
+          doData: [...m.doData.slice(1), randomDO()],
+        };
+      })
+    );
+  }, 1000);
+  return () => clearInterval(interval);
+}, []);
 
   function handleEdit(index: number, newRpm: number, newCO2: number) {
     setMetrics(prev =>
