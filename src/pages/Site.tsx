@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { StatCard } from "../components/StatCard";
 import { SiteOverviewCard } from "../components/SiteOverviewCard";
 import { DisplayReactor, ReactorStatusList } from "../components/ReactorStatusList";
+import VideoFeed from "../components/VideoFeed";
 
 // Realistic random generators for temp, ph, DO (but NOT rpm/psi)
 function randomTemp() {
@@ -22,12 +23,12 @@ const reactorIds = [
 ];
 
 const displayReactors: DisplayReactor[] = [
-  { id: "CAN-123-12", status: "active", startedAt: new Date(Date.now() - 8 * 3600 * 1000) },
-  { id: "CAN-123-15", status: "active", startedAt: new Date(Date.now() - 6.5 * 3600 * 1000) },
-  { id: "CAN-123-19", status: "active", startedAt: new Date(Date.now() - 10 * 3600 * 1000) },
-  { id: "CAN-123-20", status: "active", startedAt: new Date(Date.now() - 12 * 3600 * 1000) },
-  { id: "CAN-123-21", status: "warning", startedAt: new Date(Date.now() - 4.25 * 3600 * 1000) },
-  { id: "CAN-123-24", status: "error", startedAt: new Date(Date.now() - 2.1 * 3600 * 1000) },
+  { id: "CAN-123-12", status: "active", startedAt: new Date(Date.now() - 8 * 3600 * 5000) },
+  { id: "CAN-123-15", status: "active", startedAt: new Date(Date.now() - 6.5 * 3600 * 20000) },
+  { id: "CAN-123-19", status: "active", startedAt: new Date(Date.now() - 10 * 3600 * 300) },
+  { id: "CAN-123-20", status: "active", startedAt: new Date(Date.now() - 12 * 3600 * 900) },
+  { id: "CAN-123-21", status: "warning", startedAt: new Date(Date.now() - 4.25 * 300 * 100) },
+  { id: "CAN-123-24", status: "error", startedAt: new Date(Date.now() - 2.1 * 3600 * 800) },
   // Inactives
   ...Array.from({ length: 12 }, (_, i) => ({
     id: `CAN-124-${i + 1}`,
@@ -88,14 +89,23 @@ export default function Site() {
         <div className="w-full lg:w-[75%]">
           {/* Overview cards */}
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
-            <SiteOverviewCard label="Reactors" value={reactorIds.length} icon={<span role="img" aria-label="reactor">🧪</span>} />
+            <SiteOverviewCard
+              label="Reactors"
+              value={reactorIds.length}
+              icon={<span role="img" aria-label="reactor">🧪</span>}
+              delta={+1}  // Example: One more reactor than last week
+            />
+
             <SiteOverviewCard
               label="AI Yield"
               value={`${yieldPrediction}%`}
               colorClass="text-[#26bfa6]"
               subtext={yieldPrediction >= 90 ? "Excellent" : yieldPrediction >= 75 ? "Good" : "Low"}
               icon={<span role="img" aria-label="yield">🤖</span>}
+              delta={-2.5} // Example: 2.5% down from last week
+              deltaLabel="7d"
             />
+
             <SiteOverviewCard
               label="Site Health"
               value={`${siteHealthPercent}%`}
@@ -114,7 +124,10 @@ export default function Site() {
                   siteHealthPercent >= 75 ? <span role="img" aria-label="warn">⚠️</span> :
                     <span role="img" aria-label="err">❌</span>
               }
+              delta={+1.3} // Example: 1.3% up from last week
+              deltaLabel="7d"
             />
+
           </div>
           {/* Stat cards grid */}
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
@@ -138,7 +151,7 @@ export default function Site() {
         {/* SIDEBAR (35% on large screens) */}
         <div className="w-full h-full lg:w-[25%] flex flex-col gap-6">
           {/* Mock Camera Feed */}
-          
+          <VideoFeed />
           {/* Scrollable Reactors List */}
           <ReactorStatusList reactors={displayReactors} />
         </div>

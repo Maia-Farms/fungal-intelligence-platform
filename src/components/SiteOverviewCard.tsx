@@ -4,9 +4,11 @@ interface SiteOverviewCardProps {
   label: string;
   value: string | number;
   subtext?: string;
-  colorClass?: string; // e.g. "text-[#26bfa6]"
+  colorClass?: string;
   icon?: React.ReactNode;
   className?: string;
+  delta?: number;          // <-- NEW
+  deltaLabel?: string;     // <-- Optional extra
 }
 
 export const SiteOverviewCard: React.FC<SiteOverviewCardProps> = ({
@@ -16,6 +18,8 @@ export const SiteOverviewCard: React.FC<SiteOverviewCardProps> = ({
   colorClass = "",
   icon,
   className = "",
+  delta = undefined,
+  deltaLabel = "7d", // Default to "7d"
 }) => (
   <div
     className={`
@@ -24,19 +28,26 @@ export const SiteOverviewCard: React.FC<SiteOverviewCardProps> = ({
       w-full
       ${className}
     `}
-    style={{ minHeight: 100 }} // matches StatCard min height
+    style={{ minHeight: 100 }}
   >
-    {/* Icon (optional) */}
     {icon && <div className="mb-3 text-2xl">{icon}</div>}
-    {/* Main Value */}
-    <span className={`font-halvar font-bold text-3xl text-[#173D3C] mb-1 ${colorClass}`}>
-      {value}
-    </span>
-    {/* Label */}
-    <span className="font-halvar text-xs text-gray-800 mb-1 text-center">
-      {label}
-    </span>
-    {/* Subtext (e.g. status or explanation) */}
+    <span className={`font-halvar font-bold text-3xl text-[#173D3C] mb-1 ${colorClass}`}>{value}</span>
+    {delta !== undefined && (
+      <span
+        className={`font-halvar text-xs mb-1 ${
+          delta > 0
+            ? "text-green-600"
+            : delta < 0
+              ? "text-red-600"
+              : "text-gray-400"
+        }`}
+      >
+        {delta > 0 ? "+" : ""}
+        {delta}
+        <span className="text-xs ml-1">{deltaLabel}</span>
+      </span>
+    )}
+    <span className="font-halvar text-xs text-gray-800 mb-1 text-center">{label}</span>
     {subtext && (
       <span className="font-halvar text-xs text-gray-400 text-center">{subtext}</span>
     )}
