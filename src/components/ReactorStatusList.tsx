@@ -27,10 +27,11 @@ const statusText: Record<DisplayReactor["status"], string> = {
 // Format fermentation elapsed time
 function formatElapsed(from: Date) {
     const totalSec = Math.floor((Date.now() - from.getTime()) / 1000);
-    const hours = Math.floor(totalSec / 3600);
+    const days = Math.floor(totalSec / 86400);
+    const hours = Math.floor(totalSec / 3600) - days * 24;
     const mins = Math.floor((totalSec % 3600) / 60);
     const secs = totalSec % 60;
-    return `${hours}h ${mins}m ${secs}s`;
+    return `${days}d ${hours}h ${mins}m ${secs}s`;
 }
 
 export const ReactorStatusList: React.FC<ReactorStatusListProps> = ({

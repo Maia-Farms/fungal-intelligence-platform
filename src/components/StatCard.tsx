@@ -9,7 +9,7 @@ interface StatCardProps {
     title: string;
     temp: number;
     rpm: number;
-    psi: number;
+    co2: number;
     phData: number[];
     doData: number[];
     currentStage: number;
@@ -23,7 +23,7 @@ export const StatCard: React.FC<StatCardProps> = ({
     title,
     temp,
     rpm,
-    psi,
+    co2,
     phData,
     doData,
     currentStage,
@@ -34,14 +34,14 @@ export const StatCard: React.FC<StatCardProps> = ({
 }) => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [editRpm, setEditRpm] = useState(rpm);
-    const [editPsi, setEditPsi] = useState(psi);
+    const [editPsi, setEditPsi] = useState(co2);
     const navigate = useNavigate();
 
     // Sync inputs if parent changes values externally
     React.useEffect(() => {
       setEditRpm(rpm);
-      setEditPsi(psi);
-    }, [rpm, psi]);
+      setEditPsi(co2);
+    }, [rpm, co2]);
 
     // Overlay handlers
     const handleEditControls = (e: React.MouseEvent) => {
@@ -99,20 +99,20 @@ export const StatCard: React.FC<StatCardProps> = ({
                     <div className="flex-1">
                         <StepProgressBar currentStage={currentStage} />
                         <div className="flex flex-row items-end justify-center gap-6">
-                            <div className="flex flex-col items-center w-full max-w-[70px]">
+                            <div className="flex flex-col items-center w-full max-w-[95px]">
                                 <SVGGauge value={rpm} min={0} max={900} units="rpm" title="" />
                             </div>
-                            <div className="flex flex-col items-center w-full max-w-[100px]">
+                            <div className="flex flex-col items-center w-full max-w-[120px]">
                                 <SVGGauge value={temp} min={18} max={32} units="°C" title="" />
                             </div>
-                            <div className="flex flex-col items-center w-full max-w-[70px]">
-                                <SVGGauge value={psi} min={0} max={30} units="psi" title="" />
+                            <div className="flex flex-col items-center w-full max-w-[95px]">
+                                <SVGGauge value={co2} min={200} max={600} units="CO₂ ppm" title="" />
                             </div>
                         </div>
                         <LinePlotMock width={300} height={100} className="mt-4" phData={phData} doData={doData} />
                     </div>
                     <div className="mb-2">
-                        <h3 className="font-halvar-medium text-lg font-semibold text-[#262626] mb-1 text-center">
+                        <h3 className="font-halvar-medium text-2xl font-semibold text-[#262626] mb-1 text-center">
                             {title}
                         </h3>
                     </div>

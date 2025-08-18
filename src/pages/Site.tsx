@@ -28,23 +28,26 @@ const displayReactors: DisplayReactor[] = [
 const reactorStages = [3, 4, 4, 2, 1, 3];
 
 function randomPh() {
-  return +(Math.random() * 0.3 + 6.8).toFixed(2);
+  return +(Math.random() * 0.5 + 6.8).toFixed(2);
 }
 function randomDO() {
-  return +(Math.random() * 5 + 88).toFixed(1);
+  return +(Math.random() * 8 + 88).toFixed(1);
 }
 function clamp(val: number, min: number, max: number) {
   return Math.max(min, Math.min(max, val));
 }
-function initialTemp() {
-  return Math.random() * 3.2 + 21.8; // No rounding
+// CO2 ppm random and nudge generators
+function initialCO2() {
+  return Math.random() * 200 + 300; // 300–500 ppm, float
 }
-
+function initialTemp() {
+  return Math.random() * 3.2 + 21.8;
+}
 function initialMetrics() {
   return reactorIds.map(() => ({
-    temp: initialTemp(), // No rounding
+    temp: initialTemp(),
     rpm: 300,
-    psi: 13.0,
+    co2: initialCO2(), // CO2 added here
     phData: Array.from({ length: 12 }, randomPh),
     doData: Array.from({ length: 12 }, randomDO),
   }));
@@ -58,12 +61,15 @@ export default function Site() {
     const interval = setInterval(() => {
       setMetrics(prevMetrics =>
         prevMetrics.map((m) => {
-          const tempDelta = Math.random() * 0.08 - 0.04; // smaller deltas: -0.04 to +0.04 per second
+          const tempDelta = Math.random() * 0.08 - 0.04;
           const newTemp = clamp(m.temp + tempDelta, 21.0, 26.0);
+          // Simulate small CO2 drift (±1 ppm each time)
+          const co2Delta = Math.random() * 2 - 1;
+          const newCO2 = clamp(m.co2 + co2Delta, 300, 500);
           return {
-            temp: newTemp, // keep as float
+            temp: newTemp,
             rpm: m.rpm,
-            psi: m.psi,
+            co2: newCO2,
             phData: [...m.phData.slice(1), randomPh()],
             doData: [...m.doData.slice(1), randomDO()],
           };
@@ -73,10 +79,10 @@ export default function Site() {
     return () => clearInterval(interval);
   }, []);
 
-  function handleEdit(index: number, newRpm: number, newPsi: number) {
+  function handleEdit(index: number, newRpm: number, newCO2: number) {
     setMetrics(prev =>
       prev.map((m, i) =>
-        i === index ? { ...m, rpm: newRpm, psi: newPsi } : m
+        i === index ? { ...m, rpm: newRpm, co2: newCO2 } : m
       )
     );
   }
@@ -137,13 +143,13 @@ export default function Site() {
               <StatCard
                 key={reactor}
                 title={`Reactor ${reactor}`}
-                temp={reactor === `CAN-123-24` ? 30.8 : metrics[i] ? +metrics[i].temp.toFixed(1) : 0} // round only for display!
+                temp={reactor === `CAN-123-24` ? 30.8 : metrics[i] ? +metrics[i].temp.toFixed(1) : 0}
                 rpm={metrics[i].rpm}
-                psi={metrics[i].psi}
+                co2={metrics[i] ? Math.round(metrics[i].co2) : 0}
                 phData={metrics[i].phData}
                 doData={metrics[i].doData}
                 currentStage={reactorStages[i]}
-                onEdit={(newRpm, newPsi) => handleEdit(i, newRpm, newPsi)}
+                onEdit={(newRpm, newCO2) => handleEdit(i, newRpm, newCO2)}
                 reactorId={reactor}
               />
             ))}
