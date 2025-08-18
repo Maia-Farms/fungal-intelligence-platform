@@ -6,11 +6,11 @@ import Logo from "./../assets/Wordmark - Black.svg";
 const navLinks = [
   { name: "MAIA LAB", path: "/maia-lab" },
 
-  // { name: "GLOBAL", path: "/global" },
-  // { name: "SITE", path: "/site" },
-  // { name: "REACTOR", path: "/reactor" },
-  // { name: "BATCH ANALYSIS", path: "/batch-analysis" },
-  // { name: "STRAINS EXPLORE", path: "/strains" },
+  { name: "GLOBAL", path: "/global" },
+  { name: "SITE", path: "/site" },
+  { name: "REACTOR", path: "/reactor" },
+  { name: "BATCH ANALYSIS", path: "/batch-analysis" },
+  { name: "STRAINS EXPLORE", path: "/strains" },
 ];
 
 // Utility: returns true if current path matches link path

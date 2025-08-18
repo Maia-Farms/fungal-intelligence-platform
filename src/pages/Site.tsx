@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { StatCard } from "../components/StatCard";
+import { SiteOverviewCard } from "../components/SiteOverviewCard";
 
 // Realistic random generators for temp, ph, DO (but NOT rpm/psi)
 function randomTemp() {
@@ -34,25 +35,22 @@ function initialMetrics() {
 export default function Site() {
   const { siteId } = useParams<{ siteId: string }>();
   const [metrics, setMetrics] = useState(() => initialMetrics());
-;
 
   useEffect(() => {
     const interval = setInterval(() => {
       setMetrics(prevMetrics =>
         prevMetrics.map(m => ({
           temp: randomTemp(),
-          rpm: m.rpm,   // Preserves current value (user or initial)
+          rpm: m.rpm,
           psi: m.psi,
           phData: [...m.phData.slice(1), randomPh()],
           doData: [...m.doData.slice(1), randomDO()],
         }))
       );
-
     }, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  // Edit handler for an individual card: only updates rpm/psi for that card
   function handleEdit(index: number, newRpm: number, newPsi: number) {
     setMetrics(prev =>
       prev.map((m, i) =>
@@ -61,26 +59,65 @@ export default function Site() {
     );
   }
 
+  const yieldPrediction = 95;
+  const siteHealthPercent = 97;
+
   return (
-    <div className="py-10 px-6 max-w-7xl mx-auto">
-      <h1 className="font-halvar text-2xl font-semibold mb-8 text-center">
+    <div className="py-10 px-6 max-w-8xl mx-auto">
+      <h1 className="font-halvar text-2xl font-semibold mb-8">
         SITE: {siteId?.toUpperCase() || "REACTORS"}
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {reactorIds.map((reactor, i) => (
-          <StatCard
-            key={reactor}
-            title={`Reactor ${reactor}`}
-            temp={metrics[i].temp}
-            rpm={metrics[i].rpm}
-            psi={metrics[i].psi}
-            phData={metrics[i].phData}
-            doData={metrics[i].doData}
-            currentStage={reactorStages[i]}
-            onEdit={(newRpm, newPsi) => handleEdit(i, newRpm, newPsi)}
-            reactorId={reactor}
+      <div className="w-[65%] mx-auto">
+        {/* ALIGNED grid: 3 cols both for overview and stats */}
+        <div className="grid grid-cols-3 gap-6 mb-8">
+          <SiteOverviewCard
+            label="Reactors"
+            value={reactorIds.length}
+            icon={<span role="img" aria-label="reactor">🧪</span>}
           />
-        ))}
+          <SiteOverviewCard
+            label="AI Yield"
+            value={`${yieldPrediction}%`}
+            colorClass="text-[#26bfa6]"
+            subtext={yieldPrediction >= 90 ? "Excellent" : yieldPrediction >= 75 ? "Good" : "Low"}
+            icon={<span role="img" aria-label="yield">🤖</span>}
+          />
+          <SiteOverviewCard
+            label="Site Health"
+            value={`${siteHealthPercent}%`}
+            colorClass={
+              siteHealthPercent >= 90 ? "text-[#26bfa6]" :
+              siteHealthPercent >= 75 ? "text-yellow-500" :
+              "text-red-500"
+            }
+            subtext={
+              siteHealthPercent >= 90 ? "Healthy" :
+              siteHealthPercent >= 75 ? "Warning" :
+              "Critical"
+            }
+            icon={
+              siteHealthPercent >= 90 ? <span role="img" aria-label="ok">✅</span> :
+              siteHealthPercent >= 75 ? <span role="img" aria-label="warn">⚠️</span> :
+              <span role="img" aria-label="err">❌</span>
+            }
+          />
+        </div>
+        <div className="grid grid-cols-1  xl:grid-cols-3 gap-6">
+          {reactorIds.map((reactor, i) => (
+            <StatCard
+              key={reactor}
+              title={`Reactor ${reactor}`}
+              temp={metrics[i].temp}
+              rpm={metrics[i].rpm}
+              psi={metrics[i].psi}
+              phData={metrics[i].phData}
+              doData={metrics[i].doData}
+              currentStage={reactorStages[i]}
+              onEdit={(newRpm, newPsi) => handleEdit(i, newRpm, newPsi)}
+              reactorId={reactor}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

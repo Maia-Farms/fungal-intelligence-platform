@@ -70,7 +70,7 @@ export const StatCard: React.FC<StatCardProps> = ({
             >
                 {/* Overlay with two buttons (only on hover/focus), pointer-events-auto for buttons */}
                 <div className="absolute inset-0 z-10 flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-150
+                    <div className="opacity-0 min-w-[280px] group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-150
                                     bg-black/60 w-full h-full flex flex-col gap-2 items-center justify-center pointer-events-none">
                         <div className="flex gap-4 pointer-events-auto">
                             {/* Edit Controls */}
@@ -95,7 +95,7 @@ export const StatCard: React.FC<StatCardProps> = ({
                     </div>
                 </div>
                 {/* Main card */}
-                <div className="bg-white border border-black rounded-lg shadow-md p-4 flex flex-col h-full relative z-0 transition">
+                <div className="bg-white min-w-[280px] border border-black rounded-lg shadow-md p-4 flex flex-col h-full relative z-0 transition">
                     <div className="flex-1">
                         <StepProgressBar currentStage={currentStage} />
                         <div className="flex flex-row items-end justify-center gap-6">
