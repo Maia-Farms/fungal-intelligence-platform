@@ -23,6 +23,13 @@ const SVGGauge: React.FC<SVGGaugeProps> = ({
   className = ""
 }) => {
   const percent = Math.max(0, Math.min(1, (value - min) / (max - min)));
+  // Color logic
+let arcColor = "#26bfa6"; // green, default
+if (percent < 0.15 || percent > 0.85) {
+  arcColor = "#e53935"; // red
+} else if ((percent >= 0.15 && percent < 0.3) || (percent > 0.7 && percent <= 0.85)) {
+  arcColor = "#fdd835"; // yellow (amber)
+}
   const radius = LOGICAL_SIZE / 2 - 12;
   const cx = LOGICAL_SIZE / 2, cy = LOGICAL_SIZE / 2;
   const circ = 2 * Math.PI * radius;
@@ -43,7 +50,7 @@ const SVGGauge: React.FC<SVGGaugeProps> = ({
           cy={cy}
           r={radius}
           fill="none"
-          stroke="#D9D9D9"
+          stroke={"#D9D9D9"}
           strokeWidth="12"
         />
         {/* Value arc */}
@@ -52,7 +59,7 @@ const SVGGauge: React.FC<SVGGaugeProps> = ({
           cy={cy}
           r={radius}
           fill="none"
-          stroke="#26bfa6"
+          stroke={arcColor}
           strokeWidth="12"
           strokeDasharray={circ}
           strokeDashoffset={strokeDashoffset}
@@ -66,10 +73,10 @@ const SVGGauge: React.FC<SVGGaugeProps> = ({
           y="48%"
           textAnchor="middle"
           alignmentBaseline="middle"
-          className="font-halvar font-bold"
+          className="font-halvar-medium font-bold"
           style={{ fontSize: LOGICAL_SIZE * 0.28, fill: "#173D3C" }}
         >
-          {Math.round(value)}
+          {value}
         </text>
         {/* Units */}
         {units &&
@@ -86,7 +93,7 @@ const SVGGauge: React.FC<SVGGaugeProps> = ({
         }
       </svg>
       {title && (
-        <span className="mt-1 text-xs font-halvar text-[#262626]">{title}</span>
+        <span className="mt-1 text-xs font-halvar-medium text-[#262626]">{title}</span>
       )}
     </div>
   );

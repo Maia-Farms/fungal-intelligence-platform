@@ -75,7 +75,7 @@ export const StatCard: React.FC<StatCardProps> = ({
                         <div className="flex gap-4 pointer-events-auto">
                             {/* Edit Controls */}
                             <button
-                                className="px-4 py-2 rounded bg-[#26bfa6] text-white font-halvar font-semibold shadow hover:bg-[#173D3C] transition"
+                                className="px-4 py-2 rounded bg-[#26bfa6] text-white font-halvar-regular font-semibold shadow hover:bg-[#173D3C] transition"
                                 type="button"
                                 tabIndex={-1}
                                 onClick={handleEditControls}
@@ -84,7 +84,7 @@ export const StatCard: React.FC<StatCardProps> = ({
                             </button>
                             {/* View Reactor */}
                             <button
-                                className="px-4 py-2 rounded bg-white text-[#173D3C] border-2 border-[#173D3C] font-halvar font-semibold shadow hover:bg-[#173D3C] hover:text-white transition"
+                                className="px-4 py-2 rounded bg-white text-[#173D3C] border-2 border-[#173D3C] font-halvar-regular font-semibold shadow hover:bg-[#173D3C] hover:text-white transition"
                                 type="button"
                                 tabIndex={-1}
                                 onClick={handleViewReactor}
@@ -103,7 +103,7 @@ export const StatCard: React.FC<StatCardProps> = ({
                                 <SVGGauge value={rpm} min={0} max={900} units="rpm" title="" />
                             </div>
                             <div className="flex flex-col items-center w-full max-w-[100px]">
-                                <SVGGauge value={temp} min={0} max={40} units="°C" title="" />
+                                <SVGGauge value={temp} min={18} max={32} units="°C" title="" />
                             </div>
                             <div className="flex flex-col items-center w-full max-w-[70px]">
                                 <SVGGauge value={psi} min={0} max={30} units="psi" title="" />
@@ -112,7 +112,7 @@ export const StatCard: React.FC<StatCardProps> = ({
                         <LinePlotMock width={300} height={100} className="mt-4" phData={phData} doData={doData} />
                     </div>
                     <div className="mb-2">
-                        <h3 className="font-halvar text-lg font-semibold text-[#262626] mb-1 text-center">
+                        <h3 className="font-halvar-medium text-lg font-semibold text-[#262626] mb-1 text-center">
                             {title}
                         </h3>
                     </div>
@@ -123,7 +123,7 @@ export const StatCard: React.FC<StatCardProps> = ({
             {dialogOpen && (
                 <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
                     <div className="bg-white rounded-xl p-6 w-full max-w-xs shadow-lg flex flex-col">
-                        <h2 className="font-halvar font-bold text-lg mb-4 text-[#173D3C] text-center">Edit Controls</h2>
+                        <h2 className="font-halvar-medium font-bold text-lg mb-4 text-[#173D3C] text-center">Edit Controls</h2>
                         <label className="block mb-3">
                             <span className="block text-xs text-[#555] mb-1 font-halvar">Impeller RPM</span>
                             <input
@@ -152,7 +152,7 @@ export const StatCard: React.FC<StatCardProps> = ({
                                 Cancel
                             </button>
                             <button
-                                className="px-3 py-1 rounded bg-[#26bfa6] text-white font-halvar hover:bg-[#173D3C]"
+                                className="px-3 py-1 rounded bg-[#26bfa6] text-white font-halvar-medium hover:bg-[#173D3C]"
                                 onClick={handleDialogSave}
                             >
                                 Save
