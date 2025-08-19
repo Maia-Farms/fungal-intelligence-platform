@@ -4,6 +4,9 @@ import { StatCard } from "../components/StatCard";
 import { SiteOverviewCard } from "../components/SiteOverviewCard";
 import { DisplayReactor, ReactorStatusList } from "../components/ReactorStatusList";
 import VideoFeed from "../components/VideoFeed";
+import { FaFlask } from "react-icons/fa";             // Reactors (Lab Flask)
+import { FiCpu } from "react-icons/fi";         // AI Yield (could use a dashboard/gauge icon)
+import { MdHealthAndSafety } from "react-icons/md";   // Site Health (Medical/Health Shield, Material)
 
 // Six reactors
 const reactorIds = [
@@ -28,7 +31,7 @@ const displayReactors: DisplayReactor[] = [
 const reactorStages = [3, 4, 4, 2, 1, 3];
 
 function randomPh() {
-  return +(Math.random() * 0.5 + 6.8).toFixed(2);
+  return +(Math.random() * 1 + 5.5).toFixed(2);
 }
 function randomDO() {
   return +(Math.random() * 8 + 88).toFixed(1);
@@ -100,41 +103,41 @@ export default function Site() {
           {/* Overview cards */}
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
             <SiteOverviewCard
-              label="Reactors"
-              value={displayReactors.length}
-              icon={<span role="img" aria-label="reactor">🧪</span>}
-              delta={+3}
-            />
-            <SiteOverviewCard
-              label="AI Yield"
-              value={`${yieldPrediction}%`}
-              colorClass="text-[#26bfa6]"
-              subtext={yieldPrediction >= 90 ? "Excellent" : yieldPrediction >= 75 ? "Good" : "Low"}
-              icon={<span role="img" aria-label="yield">🤖</span>}
-              delta={-2.5}
-              deltaLabel="7d"
-            />
-            <SiteOverviewCard
-              label="Site Health"
-              value={`${siteHealthPercent}%`}
-              colorClass={
-                siteHealthPercent >= 90 ? "text-[#26bfa6]" :
-                  siteHealthPercent >= 75 ? "text-yellow-500" :
-                    "text-red-500"
-              }
-              subtext={
-                siteHealthPercent >= 90 ? "Healthy" :
-                  siteHealthPercent >= 75 ? "Warning" :
-                    "Critical"
-              }
-              icon={
-                siteHealthPercent >= 90 ? <span role="img" aria-label="ok">✅</span> :
-                  siteHealthPercent >= 75 ? <span role="img" aria-label="warn">⚠️</span> :
-                    <span role="img" aria-label="err">❌</span>
-              }
-              delta={+1.3}
-              deltaLabel="7d"
-            />
+  label="Reactors"
+  value={displayReactors.length}
+  icon={<FaFlask size={28} className="text-[#173D3C]" />}
+  delta={+3}
+/>
+
+<SiteOverviewCard
+  label="AI Yield"
+  value={`${yieldPrediction}%`}
+  colorClass="text-[#26bfa6]"
+  subtext={yieldPrediction >= 90 ? "Excellent" : yieldPrediction >= 75 ? "Good" : "Low"}
+  icon={<FiCpu size={28} className="text-[#173D3C]" />}   // modern crisp "gauge" look
+  // Optionally: icon={<FaRobot size={28} className="text-[#26bfa6]" />}
+  delta={-2.5}
+  deltaLabel="7d"
+/>
+
+<SiteOverviewCard
+  label="Site Health"
+  value={`${siteHealthPercent}%`}
+  colorClass={
+    siteHealthPercent >= 90 ? "text-[#26bfa6]" :
+      siteHealthPercent >= 75 ? "text-yellow-500" :
+        "text-red-500"
+  }
+  subtext={
+    siteHealthPercent >= 90 ? "Healthy" :
+      siteHealthPercent >= 75 ? "Warning" :
+        "Critical"
+  }
+  icon={<MdHealthAndSafety size={28} className="text-[#173D3C]" />}
+  delta={+1.3}
+  deltaLabel="7d"
+/>
+
           </div>
           {/* Stat cards grid */}
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">

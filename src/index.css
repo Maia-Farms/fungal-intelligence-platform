@@ -39,3 +39,12 @@
   font-family: "Pica 10 Pitch", monospace;
   font-weight: 400;
 }
+
+@keyframes slow-blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.35; }
+  100% { opacity: 1; }
+}
+.slow-blink {
+  animation: slow-blink 1.5s infinite;
+}

@@ -12,7 +12,7 @@ const chartPadding = 20;
 const bottomLabelSpace = 20;
 const chartWidth = 340;
 // Add bottom space to the overall height, so e.g. 125 + 20 = 145
-const chartHeight = 145;
+const chartHeight = 200;
 
 function scale(value: number, [min, max]: [number, number], height: number) {
   return chartPadding + ((max - value) / (max - min)) * (height - 2 * chartPadding);
@@ -29,10 +29,10 @@ export default function LinePlotMock({
   const xStep = (width - 2 * chartPadding) / (numPoints - 1);
 
   const pHPoints = phData.map((d, i) =>
-    `${chartPadding + i * xStep},${scale(d, [6.5, 7.3], height)}`
+    `${chartPadding + i * xStep},${scale(d, [2.5, 8.0], height)}`
   ).join(" ");
   const doPoints = doData.map((d, i) =>
-    `${chartPadding + i * xStep},${scale(d, [80, 100], height)}`
+    `${chartPadding + i * xStep},${scale(d, [40, 160], height)}`
   ).join(" ");
 
   // Y positions for top and bottom lines
@@ -91,7 +91,7 @@ const botY = height - chartPadding - bottomLabelSpace;
           fontWeight={700}
           textAnchor="start"
         >
-          DO 100
+          DO 160
         </text>
         {/* Top-right: pH max label */}
         <text
@@ -102,7 +102,7 @@ const botY = height - chartPadding - bottomLabelSpace;
           fontWeight={700}
           textAnchor="end"
         >
-          pH 7.3
+          pH 8.0
         </text>
         {/* Bottom-left: DO min label */}
         <text
@@ -113,7 +113,7 @@ const botY = height - chartPadding - bottomLabelSpace;
           fontWeight={700}
           textAnchor="start"
         >
-          DO 80
+          DO 40
         </text>
         {/* Bottom-right: pH min label */}
         <text
@@ -124,7 +124,7 @@ const botY = height - chartPadding - bottomLabelSpace;
           fontWeight={700}
           textAnchor="end"
         >
-          pH 6.5
+          pH 2.5
         </text>
 
         {/* Tick marks and labels */}
