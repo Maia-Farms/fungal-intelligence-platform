@@ -8,8 +8,8 @@ function App() {
     <>
     <Header />
     <Routes>
-      <Route path="/site/" element={<Site />} />
-      <Route path="/reactor/" element={<Reactor />} />
+      <Route path="/" element={<Site />} />
+      <Route path="/reactor" element={<Reactor />} />
     </Routes>
     </>);
 }
