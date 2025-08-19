@@ -95,7 +95,8 @@ export default function Site() {
   return (
     <div className="py-10 px-6 max-w-8xl mx-auto">
       <h1 className="font-halvar-medium text-2xl font-semibold mb-8">
-        SITE: {siteId?.toUpperCase() || "REACTORS"}
+        SITE: CAN-123
+        {/* {siteId?.toUpperCase() || "REACTORS"} */}
       </h1>
       <div className="flex flex-col lg:flex-row gap-8 w-full px-8">
         {/* MAIN CARDS COLUMN (65% on large screens) */}
