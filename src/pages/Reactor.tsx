@@ -83,8 +83,7 @@ export default function Reactor() {
           ← Back
         </button>
         <h1 className="font-halvar-medium text-3xl font-semibold">
-          {/* {metrics.name} */}
-          REACTOR: CAN-123-12
+          {metrics.name}
         </h1>
         <span
           className={`ml-auto text-xs font-bold px-2.5 py-1 rounded

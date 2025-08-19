@@ -9,7 +9,7 @@ function App() {
     <Header />
     <Routes>
       <Route path="/" element={<Site />} />
-      <Route path="/reactor" element={<Reactor />} />
+      <Route path="/reactor/:reactorId" element={<Reactor />} />
     </Routes>
     </>);
 }
